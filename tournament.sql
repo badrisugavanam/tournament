@@ -7,9 +7,37 @@
 -- these lines here.
 create database tournament;
 \c tournament;
-create table player(
-    id         SERIAL,
-    name       varchar(40) NOT NULL
+
+
+
+CREATE SEQUENCE public.players_id_seq;
+
+CREATE TABLE public.Players (
+                Id INTEGER NOT NULL DEFAULT nextval('public.players_id_seq'),
+                Name VARCHAR NOT NULL,
+                CONSTRAINT pk_players PRIMARY KEY (Id)
 );
 
 
+ALTER SEQUENCE public.players_id_seq OWNED BY public.Players.Id;
+
+CREATE TABLE public.Matches (
+                Winner_Id INTEGER NOT NULL,
+                Loser_Id INTEGER NOT NULL,
+                pk_matches serial PRIMARY KEY
+);
+
+
+ALTER TABLE public.Matches ADD CONSTRAINT players_matches_fk
+FOREIGN KEY (Winner_Id)
+REFERENCES public.Players (Id)
+ON DELETE CASCADE
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.Matches ADD CONSTRAINT players_matches_fk1
+FOREIGN KEY (Loser_Id)
+REFERENCES public.Players (Id)
+ON DELETE CASCADE
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
