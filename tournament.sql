@@ -41,3 +41,12 @@ REFERENCES public.Players (Id)
 ON DELETE CASCADE
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
+
+create view standing as 
+select * from players inner join matches on players.Id=matches.winner_id union select * from players inner join matches on players.Id=matches.loser_id;
+
+create view winnerstanding as select winner_id,count(winner_id) from standing group by Winner_id;
+create view loserstanding as select loser_id,count(loser_id) from standing group by loser_id;
+
+-- list as players with win count 
+--select id,name,winnerstanding.count from players left join winnerstanding on winnerstanding.winner_id=players.id;
