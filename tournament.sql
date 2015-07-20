@@ -35,23 +35,23 @@ DELETE CASCADE ON
 UPDATE NO ACTION NOT DEFERRABLE;
 
 
-CREATE VIEW players_matches AS
-SELECT id,
-       name,
-       CASE
-           WHEN winner_id IS NULL THEN 0
-           ELSE winner_id
-       END,
-       CASE
-           WHEN loser_id IS NULL THEN 0
-           ELSE loser_id
-       END,
-       CASE
-           WHEN pk_matches IS NULL THEN 0
-           ELSE pk_matches
-       END
-FROM players
-LEFT JOIN matches ON players.Id=matches.winner_id;
+-- CREATE VIEW players_matches AS
+-- SELECT id,
+--        name,
+--        CASE
+--            WHEN winner_id IS NULL THEN 0
+--            ELSE winner_id
+--        END,
+--        CASE
+--            WHEN loser_id IS NULL THEN 0
+--            ELSE loser_id
+--        END,
+--        CASE
+--            WHEN pk_matches IS NULL THEN 0
+--            ELSE pk_matches
+--        END
+-- FROM players
+-- LEFT JOIN matches ON players.Id=matches.winner_id;
 
 
 CREATE VIEW winners AS
