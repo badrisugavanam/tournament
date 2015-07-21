@@ -90,11 +90,16 @@ def testReportMatches():
     [id1, id2, id3, id4] = [row[0] for row in standings]
     reportMatch(id1, id2)
     reportMatch(id3, id4)
+
     standings = playerStandings()
     for (i, n, w, m) in standings:
         if m != 1:
             raise ValueError("Each player should have one match recorded.")
         if i in (id1, id3) and w != 1:
+            print "win"
+            print id1
+            print id3
+            print w
             raise ValueError("Each match winner should have one win recorded.")
         elif i in (id2, id4) and w != 0:
             raise ValueError("Each match loser should have zero wins recorded.")
@@ -126,14 +131,14 @@ def testPairings():
 
 
 if __name__ == '__main__':
-   # testDeleteMatches()
-   # testDelete()
+    testDeleteMatches()
+    testDelete()
     testCount()
     testRegister()
-   # testRegisterCountDelete()
-   # testStandingsBeforeMatches()
-   # testReportMatches()
-   # testPairings()
+    testRegisterCountDelete()
+    testStandingsBeforeMatches()
+    testReportMatches()
+    testPairings()
     print "Success!  All tests pass!"
 
 

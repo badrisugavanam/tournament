@@ -71,7 +71,14 @@ def playerStandings():
         wins: the number of matches the player has won
         matches: the number of matches the player has played
     """
-
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("SELECT * from playerstanding;")
+    conn.commit()
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    return rows
 
 def reportMatch(winner, loser):
     """Records the outcome of a single match between two players.
@@ -82,7 +89,7 @@ def reportMatch(winner, loser):
     """
     conn = connect()
     cur = conn.cursor()
-    cur.execute("INSERT INTO matches (winner,loser) VALUES (%i,%i);",[winner],[loser])
+    cur.execute("INSERT INTO matches VALUES (%s,%s);",(winner,loser))
     conn.commit()
     cur.close()
     conn.close()
@@ -103,3 +110,14 @@ def swissPairings():
         id2: the second player's unique id
         name2: the second player's name
     """
+    tuples=[]
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("SELECT * from playerstanding;")
+    conn.commit()
+    rows = cur.fetchall()
+    for a, b in zip(rows[::2], rows[1::2]):
+        tuples.append((a[0],a[1],b[0],b[1]))
+        cur.close()
+    conn.close()
+    return tuples

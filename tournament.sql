@@ -34,26 +34,6 @@ FOREIGN KEY (Loser_Id) REFERENCES public.Players (Id) ON
 DELETE CASCADE ON
 UPDATE NO ACTION NOT DEFERRABLE;
 
-
--- CREATE VIEW players_matches AS
--- SELECT id,
---        name,
---        CASE
---            WHEN winner_id IS NULL THEN 0
---            ELSE winner_id
---        END,
---        CASE
---            WHEN loser_id IS NULL THEN 0
---            ELSE loser_id
---        END,
---        CASE
---            WHEN pk_matches IS NULL THEN 0
---            ELSE pk_matches
---        END
--- FROM players
--- LEFT JOIN matches ON players.Id=matches.winner_id;
-
-
 CREATE VIEW winners AS
 SELECT winner_id,
        count(winner_id)
@@ -61,7 +41,7 @@ FROM matches
 GROUP BY winner_id;
 
 
-CREATE VIEW tempcount AS
+CREATE VIEW  players_matches AS
 SELECT *
 FROM
   (SELECT id,
@@ -86,7 +66,7 @@ CREATE VIEW matchcount AS
 SELECT Name,
        Id AS PlayerId,
        count(pk_matches)
-FROM tempcount
+FROM players_matches
 GROUP BY Name,
          id;
 
