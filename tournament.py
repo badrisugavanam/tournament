@@ -36,10 +36,10 @@ def countPlayers():
     cur.execute("SELECT * FROM players;")
 
     conn.commit()
-    #cur.close()
-    #conn.close()
-    print cur.rowcount
-    return cur.rowcount
+    p=cur.rowcount
+    cur.close()
+    conn.close()
+    return p
 
 def registerPlayer(name):
     """Adds a player to the tournament database.
