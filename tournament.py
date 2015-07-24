@@ -20,6 +20,7 @@ def deleteMatches():
     cur.close()
     conn.close()
 
+
 def deletePlayers():
     """Remove all the player records from the database."""
     conn = connect()
@@ -29,6 +30,7 @@ def deletePlayers():
     cur.close()
     conn.close()
 
+
 def countPlayers():
     """Returns the number of players currently registered."""
     conn = connect()
@@ -36,10 +38,11 @@ def countPlayers():
     cur.execute("SELECT * FROM players;")
 
     conn.commit()
-    p=cur.rowcount
+    p = cur.rowcount
     cur.close()
     conn.close()
     return p
+
 
 def registerPlayer(name):
     """Adds a player to the tournament database.
@@ -52,7 +55,7 @@ def registerPlayer(name):
     """
     conn = connect()
     cur = conn.cursor()
-    cur.execute("INSERT INTO players (name) VALUES (%s);",[name])
+    cur.execute("INSERT INTO players (name) VALUES (%s);", [name])
     conn.commit()
     cur.close()
     conn.close()
@@ -80,6 +83,7 @@ def playerStandings():
     conn.close()
     return rows
 
+
 def reportMatch(winner, loser):
     """Records the outcome of a single match between two players.
 
@@ -89,7 +93,7 @@ def reportMatch(winner, loser):
     """
     conn = connect()
     cur = conn.cursor()
-    cur.execute("INSERT INTO matches VALUES (%s,%s);",(winner,loser))
+    cur.execute("INSERT INTO matches VALUES (%s,%s);", (winner, loser))
     conn.commit()
     cur.close()
     conn.close()
@@ -110,14 +114,14 @@ def swissPairings():
         id2: the second player's unique id
         name2: the second player's name
     """
-    tuples=[]
+    tuples = []
     conn = connect()
     cur = conn.cursor()
     cur.execute("SELECT * from playerstanding;")
     conn.commit()
     rows = cur.fetchall()
     for a, b in zip(rows[::2], rows[1::2]):
-        tuples.append((a[0],a[1],b[0],b[1]))
+        tuples.append((a[0], a[1], b[0], b[1]))
         cur.close()
     conn.close()
     return tuples
